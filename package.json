@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
     "start": "node build/server.js",
+    "lint": "tslint --fix --project ./tsconfig.json",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\""
   },
   "keywords": [],
@@ -21,6 +22,7 @@
     "@types/node": "^18.11.9",
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
+    "tslint": "^6.1.3",
     "typescript": "^4.8.4"
   }
 }
