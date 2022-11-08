@@ -1,16 +1,30 @@
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import { Request, Response } from 'express';
+import http from 'http';
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import router from './router';
 
-dotenv.config();
+export const bootServer = (port: number): http.Server => {
+  const app = express();
 
-const app = express();
-const PORT: number = process.env.PORT || 5000;
+  app
+    .use(morgan('dev'))
+    .use(cors())
+    .use(express.json())
+    .use(router)
+    .get('/', (_: Request, res: Response) => {
+      res.status(200).send('Hello, stranger!');
+    })
+    .get('*', (_: Request, res: Response) => {
+      res.status(404).send('Sorry, not found 😞');
+    });
 
-app.use(express.json());
-app.get('/', (_: Request, res: Response) => {
-  res.send('Hello World!');
-});
+  const server = http.createServer(app);
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`); // tslint:disable-line
-});
+  server.listen(port, () => {
+    console.log(`Server is running on port:${port}`); // tslint:disable-line
+  });
+
+  return server;
+};
