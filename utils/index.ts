@@ -30,6 +30,7 @@ export const loginFunction = async (
   const userPayload = {
     user: {
       id: user.id,
+      email: user.email
     },
   };
 
@@ -55,11 +56,10 @@ export const registerFunction = async (
     return res.status(400).send({ res: 'Email is not valid!', error: true });
   }
 
-  const user = isAdmin
-    ? await Admin.findOne({ where: { email } })
-    : await Guest.findOne({ where: { email } });
+  const userAdmin = await Admin.findOne({ where: { email } })
+  const userGuest =  await Guest.findOne({ where: { email } });
 
-  if (user) {
+  if (userAdmin || userGuest) {
     return res.status(409).send({ res: 'User already exists!', error: true });
   }
 
@@ -92,6 +92,7 @@ export const registerFunction = async (
   const payload = {
     user: {
       id: newUser.id,
+      email: newUser.email
     },
   };
 
@@ -111,4 +112,15 @@ export const validateEmail = (email = '') => {
     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
   );
   return Boolean(isEmail);
+};
+
+export const phoneValidator = (phone = '') => {
+  const regexResult = phone.match(/\d/g);
+  return (Array.isArray(regexResult) && regexResult.length === 10);
+};
+
+export const NITValidator = (NIT = '') => {
+  const NITRegex = /^[0-9]*$/;
+  const NITRegexRes = NIT.match(NITRegex);
+  return NITRegexRes;
 };
