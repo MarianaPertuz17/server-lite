@@ -1,8 +1,18 @@
 import { Request, Response } from 'express';
 import { Admin } from '../models/admin';
+import { loginFunction } from '../utils';
 
-const loginAdmin = async (_: Request, res: Response) => {
+interface IAuthRequest extends Request {
+  body: {
+    email: string;
+    password: string;
+  };
+}
+
+const loginAdmin = async (req: IAuthRequest, res: Response) => {
   try {
+    const { email, password } = req.body;
+    await loginFunction(email, password, res, true);
     res.status(200).json({ res: 'login here', error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line
@@ -10,7 +20,7 @@ const loginAdmin = async (_: Request, res: Response) => {
   }
 };
 
-const registerAdmin = async (_: Request, res: Response) => {
+const registerAdmin = async (req: IAuthRequest, res: Response) => {
   try {
     await Admin.create({email: 'hello', password: 'helloworld'});
     res.status(201).json({ res: 'User created!', error: false });
@@ -20,7 +30,7 @@ const registerAdmin = async (_: Request, res: Response) => {
   }
 };
 
-const loginGuest = async (_: Request, res: Response) => {
+const loginGuest = async (req: IAuthRequest, res: Response) => {
   try {
     res.status(200).json({ res: 'login here', error: false });
   } catch (e) {
@@ -29,7 +39,7 @@ const loginGuest = async (_: Request, res: Response) => {
   }
 };
 
-const registerGuest = async (_: Request, res: Response) => {
+const registerGuest = async (req: IAuthRequest, res: Response) => {
   try {
     await Admin.create({email: 'hello', password: 'helloworld'});
     res.status(201).json({ res: 'User created!', error: false });
