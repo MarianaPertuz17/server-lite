@@ -1,26 +1,25 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import supertest from 'supertest';
 import { mocks } from './mocks';
-import router from '../router';
 import { User } from '../models/user';
 import chai from 'chai';
+import path from 'path';
+import { bootServer } from '../server';
 
-
+import { ProcessEnv } from '../environment';
 
 chai.should();
 // Allows using Chai assertions
 
 // env
-
-dotenv.config();
-
+const dotEnvPath = path.resolve('./.env');
+dotenv.config({path: dotEnvPath });
+const envVar = (process.env as ProcessEnv);
 // const validJWT =
 //   'Bearer ' + jwt.sign({ user: { id: 1 } }, process.env.JWT_SECRET);
 // const invalidJWT = 'Bearer ' + jwt.sign({ _id: 1 }, 'wrong_secret');
-const app = express();
-app.use(express.json());
-app.use(router);
+
+const app = bootServer(envVar.TEST_PORT);
 
 const request = supertest(app);
 
