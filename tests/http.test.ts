@@ -3,7 +3,6 @@ import supertest from 'supertest';
 import { mocks } from './mocks';
 import { User } from '../models/user';
 import chai from 'chai';
-import path from 'path';
 import { bootServer } from '../server';
 
 import { ProcessEnv } from '../environment';
@@ -12,8 +11,8 @@ chai.should();
 // Allows using Chai assertions
 
 // env
-const dotEnvPath = path.resolve('./.env');
-dotenv.config({path: dotEnvPath });
+
+dotenv.config();
 const envVar = (process.env as ProcessEnv);
 // const validJWT =
 //   'Bearer ' + jwt.sign({ user: { id: 1 } }, process.env.JWT_SECRET);
