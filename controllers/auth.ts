@@ -1,28 +1,49 @@
 import { Request, Response } from 'express';
-import { Admin } from '../models/admin';
-import { loginFunction } from '../utils';
+import { loginFunction, registerFunction } from '../utils';
 
-interface IAuthRequest extends Request {
-  body: {
-    email: string;
-    password: string;
-  };
+interface ILoginBody {
+  email: string;
+  password: string;
 }
 
-const loginAdmin = async (req: IAuthRequest, res: Response) => {
+interface IRegisterBody extends ILoginBody {
+  passwordRepeat: string;
+}
+
+interface IRegisterAdminBody extends IRegisterBody {
+  adminSecret: string;
+}
+
+interface ILoginRequest extends Request {
+  body: ILoginBody;
+}
+
+interface IRegisterRequest extends Request {
+  body: IRegisterBody;
+}
+
+interface IRegisterAdminRequest extends Request {
+  body: IRegisterAdminBody;
+}
+
+const loginAdmin = async (req: ILoginRequest, res: Response) => {
   try {
     const { email, password } = req.body;
     await loginFunction(email, password, res, true);
-    res.status(200).json({ res: 'login here', error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line
     res.status(500).send({ res: 'Internal Server Error!', error: true });
   }
 };
 
-const registerAdmin = async (req: IAuthRequest, res: Response) => {
+const registerAdmin = async (req: IRegisterAdminRequest, res: Response) => {
   try {
-    await Admin.create({email: 'hello', password: 'helloworld'});
+    const { email, password, passwordRepeat, adminSecret } = req.body;
+    // check for internal password
+    if (process.env.ADMIN_CREATION_SECRET !== adminSecret) {
+      return res.status(401).json({res: 'You are not authorized to create admin users', error: true});
+    }
+    await registerFunction(email, password, passwordRepeat, res, true);
     res.status(201).json({ res: 'User created!', error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line
@@ -30,19 +51,20 @@ const registerAdmin = async (req: IAuthRequest, res: Response) => {
   }
 };
 
-const loginGuest = async (req: IAuthRequest, res: Response) => {
+const loginGuest = async (req: ILoginRequest, res: Response) => {
   try {
-    res.status(200).json({ res: 'login here', error: false });
+    const { email, password } = req.body;
+    await loginFunction(email, password, res, false);
   } catch (e) {
     console.log(e); // tslint:disable-line
     res.status(500).send({ res: 'Internal Server Error!', error: true });
   }
 };
 
-const registerGuest = async (req: IAuthRequest, res: Response) => {
+const registerGuest = async (req: IRegisterRequest, res: Response) => {
   try {
-    await Admin.create({email: 'hello', password: 'helloworld'});
-    res.status(201).json({ res: 'User created!', error: false });
+    const { email, password, passwordRepeat } = req.body;
+    await registerFunction(email, password, passwordRepeat, res, false);
   } catch (e) {
     console.log(e); // tslint:disable-line
     res.status(500).send({ res: 'Internal Server Error!', error: true });

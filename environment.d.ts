@@ -10,6 +10,7 @@ declare global {
       DB_PASSWORD: string;
       DB_HOST: string; 
       JWT_SECRET: string;
+      ADMIN_CREATION_SECRET: string;
     }
   }
   declare namespace Express {
