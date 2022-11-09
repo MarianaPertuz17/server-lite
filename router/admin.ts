@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createCompany, createProduct, deleteCompany, deleteProduct, editCompany } from '../controllers/admin';
 import { loginAdmin, registerAdmin } from '../controllers/auth';
+import { generatePDFReport } from '../controllers/stats';
 import { adminMiddleware } from '../middleware/admin';
 import { authMiddleware } from '../middleware/auth';
 
@@ -19,4 +20,6 @@ adminRouter.delete('/company/:companyId', authMiddleware, adminMiddleware, delet
 adminRouter.post('/product', authMiddleware, adminMiddleware, createProduct);
 adminRouter.delete('/product/:productId', authMiddleware, adminMiddleware, deleteProduct);
 
+// pdf generation
+adminRouter.get('/pdf/:companyId', authMiddleware, adminMiddleware, generatePDFReport);
 export { adminRouter };

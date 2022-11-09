@@ -20,7 +20,9 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
+    "pdfkit": "^0.13.0",
     "pg": "^8.8.0",
     "sequelize": "^6.25.5",
     "supertest": "^6.3.1"
@@ -34,6 +36,7 @@
     "@types/mocha": "^10.0.0",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
+    "@types/pdfkit": "^0.12.8",
     "chai": "^4.3.7",
     "concurrently": "^7.5.0",
     "mocha": "^10.1.0",
