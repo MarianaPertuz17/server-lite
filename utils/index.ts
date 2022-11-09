@@ -56,7 +56,7 @@ export const registerFunction = async (
     return res.status(400).send({ res: 'Email is not valid!', error: true });
   }
 
-  const userAdmin = await Admin.findOne({ where: { email } })
+  const userAdmin = await Admin.findOne({ where: { email } });
   const userGuest =  await Guest.findOne({ where: { email } });
 
   if (userAdmin || userGuest) {
