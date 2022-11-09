@@ -1,8 +1,6 @@
-export interface User {
+export interface Admin {
   id: number;
-  firstName: string;
-  surname: string;
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -11,7 +9,7 @@ export interface MocksObj {
   invalidJWT: {
     value: string;
   };
-  mockUser: User;
+  mockAdmin: Admin;
 }
 
 

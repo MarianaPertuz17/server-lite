@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import supertest from 'supertest';
 import { mocks } from './mocks';
-import { User } from '../models/user';
+import { Admin } from '../models/admin';
 import chai from 'chai';
 import { bootServer } from '../server';
 
@@ -26,25 +26,25 @@ describe('test server endpoints', () => {
   // setup
   before('Ensure Models are Synced', async () => {
     // Ensure Models are synced and tables crated
-    await User.sync();
+    await Admin.sync();
 
-    // destroys test user if it exists
-    await User.destroy({
+    // destroys test Admin if it exists
+    await Admin.destroy({
       where: {
-        id: mocks.mockUser.id,
+        id: mocks.mockAdmin.id,
       },
     });
     // creates test user
-    await User.create(mocks.mockUser);
+    await Admin.create(mocks.mockAdmin);
 
   });
 
   // clean up
   after('clean up', async () => {
     // Destroys test user if it exists
-    await User.destroy({
+    await Admin.destroy({
       where: {
-        id: mocks.mockUser.id,
+        id: mocks.mockAdmin.id,
       },
     });
   });

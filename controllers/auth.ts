@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user';
+import { Admin } from '../models/admin';
 
 const login = async (_: Request, res: Response) => {
   try {
@@ -12,7 +12,7 @@ const login = async (_: Request, res: Response) => {
 
 const register = async (_: Request, res: Response) => {
   try {
-    await User.create({firstName: 'Mariana', surname: 'Pertuz', username: 'MariPer', password: 'helloworld'});
+    await Admin.create({email: 'hello', password: 'helloworld'});
     res.status(201).json({ res: 'User created!', error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line

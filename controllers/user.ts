@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user';
+import { Admin } from '../models/admin';
 
 const getUserInfo = async (_: Request, res: Response) => {
   try {
-    const user = await User.findOne({where: {username: 'MariPer'}});
+    const user = await Admin.findOne({where: {email: 'MariPer'}});
     res.status(200).json({ res: user, error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line
