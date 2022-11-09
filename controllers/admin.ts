@@ -13,6 +13,12 @@ interface ICompanyRequest extends Request {
   body: ICompanyBody;
 }
 
+interface ICompanyDeleteRequest extends Request {
+  body: {
+    NIT: string;
+  };
+}
+
 const createCompany = async (req: ICompanyRequest, res: Response) => {
   try {
     const { NIT, name, address, phone } = req.body;
@@ -65,4 +71,26 @@ const editCompany = async (req: ICompanyRequest, res: Response) => {
   }
 };
 
-export { createCompany, editCompany };
+const deleteCompany = async (req: ICompanyDeleteRequest, res: Response) => {
+  try {
+    const { NIT } = req.body;
+
+    if (!NIT) {
+      return res.status(400).send({res: 'Missing NIT!', error: true});
+    }
+
+    const company = await Company.findOne({where: {NIT}});
+
+    if (!company) return res.status(409).send({res: 'Company with that NIT does not exist', error: true});
+
+    await Company.destroy({where: {NIT}});
+
+    return res.status(200).send({res: `Company with NIT: ${NIT} deleted from database`, error: false});
+
+  } catch (e) {
+    console.log(e); // tslint:disable-line
+    res.status(500).send({ res: 'Internal Server Error!', error: true });
+  }
+};
+
+export { createCompany, editCompany, deleteCompany };
