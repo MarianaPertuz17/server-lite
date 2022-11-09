@@ -1,5 +1,8 @@
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
+// import path from 'path';
+
+// const dotEnvPath = path.resolve('./.env');
 dotenv.config();
 
 export const sequelize = new Sequelize(
@@ -8,7 +11,7 @@ export const sequelize = new Sequelize(
   process.env.DB_PASSWORD ?? '',
   {
     host: process.env.DB_HOST ?? 'localhost',
-    dialect: process.env.DB_DIALECT ?? 'postgres',
+    dialect: 'postgres',
     logging: true,
     dialectOptions: {
       ssl: {
