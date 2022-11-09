@@ -12,6 +12,13 @@ declare global {
       JWT_SECRET: string;
     }
   }
+  declare namespace Express {
+    export interface Request {
+      user: {
+        id: number;
+      }
+    }
+  }
 }
 
 export { ProcessEnv };
