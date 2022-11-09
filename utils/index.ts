@@ -120,6 +120,7 @@ export const phoneValidator = (phone = '') => {
 };
 
 export const NITValidator = (NIT = '') => {
+  if (typeof NIT !== 'string') return false;
   const NITRegex = /^[0-9]*$/;
   const NITRegexRes = NIT.match(NITRegex);
   return NITRegexRes;

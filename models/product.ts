@@ -7,7 +7,7 @@ import { sequelize } from './index';
 
 interface IProductAttributes {
   id: number;
-  companyId: number;
+  companyId: string;
   productName: string;
   quantity: number;
 }
@@ -19,7 +19,7 @@ export class Product
   implements IProductAttributes
 {
   public id!: number;
-  public companyId!: number;
+  public companyId!: string;
   public productName!: string;
   public quantity!: number;
 
