@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authRouter } from './auth';
-import { userRouter } from './user';
+import { adminRouter } from './admin';
+import { guestRouter } from './guest';
 
 const rootRouter = Router();
 
-rootRouter.use('/api/auth', authRouter);
-rootRouter.use('/api/user', userRouter);
+rootRouter.use('/api/guest', guestRouter);
+rootRouter.use('/api/admin', adminRouter);
 
 rootRouter.all('*', (_, res) => {
   res.status(404).send('These are not the routes you are looking for');
