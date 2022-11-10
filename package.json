@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register ./tests/*",
+    "test": "mocha -r ts-node/register ./tests/* --timeout 5000",
     "build": "npx tsc",
     "start": "node build/index.js",
     "lint": "tslint --fix --project ./tsconfig.json",

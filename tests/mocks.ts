@@ -6,10 +6,31 @@ const mocks: MocksObj = {
     value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
   },
   mockAdmin: {
-    id: 1,
-    email: 'test@gmail.com',
-    password: 'wubalubadubdub'
-  }
+    email: 'testadmin@gmail.com',
+    password: 'testpassword'
+  },
+  mockGuest: {
+    email: 'testguest@gmail.com',
+    password: 'testpassword'
+  },
+  mockCompany: {
+    NIT: '123456',
+    address: 'test_address',
+    phone: '3135881289',
+    name: 'test_company',
+  },
+  mockProducts: [
+    {
+      productName: 'test_product_1',
+      companyId: '123456',
+      quantity: 10
+    },
+    {
+      productName: 'test_product_2',
+      companyId: '123456',
+      quantity: 12
+    }
+  ]
 };
 
 export { mocks };

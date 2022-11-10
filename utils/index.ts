@@ -102,7 +102,7 @@ export const registerFunction = async (
     { expiresIn: 3600 },
     async (err, token) => {
       if (err) throw err;
-      return res.send({ res: token, error: false });
+      return res.status(201).send({ res: token, error: false });
     }
   );
 };

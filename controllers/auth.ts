@@ -44,7 +44,6 @@ const registerAdmin = async (req: IRegisterAdminRequest, res: Response) => {
       return res.status(401).json({res: 'You are not authorized to create admin users', error: true});
     }
     await registerFunction(email, password, passwordRepeat, res, true);
-    res.status(201).json({ res: 'User created!', error: false });
   } catch (e) {
     console.log(e); // tslint:disable-line
     res.status(500).send({ res: 'Internal Server Error!', error: true });
