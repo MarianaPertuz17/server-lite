@@ -40,7 +40,7 @@ interface IProductDeleteRequest extends Request {
 const createCompany = async (req: ICompanyRequest, res: Response) => {
   try {
     const { NIT, name, address, phone } = req.body;
-
+    console.log(req.body, 'create company');
     if (!NIT || !name || !address || !phone) {
       return res.status(400).send({res: 'Missing form fields!', error: true});
     }
